@@ -5,45 +5,57 @@
   <title>Invitación de Cumpleaños</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to right, #ffdde1, #ee9ca7);
-      text-align: center;
-      color: #333;
-      padding: 50px;
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: #f8d7da;
+      overflow: hidden;
     }
     h1 {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-top: 20%;
       font-size: 3em;
       color: #d6336c;
     }
-    .card {
-      background: white;
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    /* Cortinas */
+    .curtain {
+      position: fixed;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: #800000;
+      z-index: 1;
+      transition: transform 2s ease;
     }
-    .details {
-      font-size: 1.2em;
-      margin-top: 20px;
+    .left {
+      left: 0;
+      transform: translateX(0);
     }
-    .footer {
-      margin-top: 30px;
-      font-style: italic;
-      color: #555;
+    .right {
+      right: 0;
+      transform: translateX(0);
+    }
+    /* Estado abierto */
+    .open.left {
+      transform: translateX(-100%);
+    }
+    .open.right {
+      transform: translateX(100%);
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>¡Estás invitado!</h1>
-    <p class="details">
-      Ven a celebrar el cumpleaños de <strong>Mi Sobrinita</strong> 🎂🎈<br><br>
-      📅 Fecha: Sábado 24 de enero<br>
-      🕒 Hora: 4:00 PM<br>
-      📍 Lugar: Casa de la abuela, Ciudad de México
-    </p>
-    <p class="footer">¡No faltes, será un día lleno de sorpresas y diversión!</p>
-  </div>
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+  <h1>¡Estás invitado al cumpleaños de Valeria! 🎂🎈</h1>
+
+  <script>
+    // Abrir cortinas después de 1 segundo
+    setTimeout(() => {
+      document.querySelector('.left').classList.add('open');
+      document.querySelector('.right').classList.add('open');
+    }, 1000);
+  </script>
 </body>
 </html>
