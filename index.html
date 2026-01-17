@@ -4,58 +4,640 @@
   <meta charset="UTF-8">
   <title>Invitación de Cumpleaños</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: #f8d7da;
-      overflow: hidden;
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive;
+  background: radial-gradient(circle at top left, #ff0000, transparent 40%),
+              radial-gradient(circle at top right, #00a2ff, transparent 40%),
+              radial-gradient(circle at bottom left, #ffff00, transparent 40%),
+              radial-gradient(circle at bottom right, #00cc44, transparent 40%),
+              linear-gradient(to right, #ffdde1, #ee9ca7);
+  background-blend-mode: screen;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+    /* Texto de invitación */
+.invitation-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin: 12% auto 0;   /* auto en los lados centra horizontalmente */
+  padding: 24px 28px;
+  color: #d6336c;
+  font-size: 1.2em;
+  line-height: 1.6em;
+  background: rgba(255,255,255,0.8);
+  border-radius: 24px;
+  display: inline-block;
+  width: auto;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+
+
+ .invitation-text h1 {
+  font-size: 2.4em;        /* tamaño grande pero no excesivo */
+  color: #c2185b;          /* color festivo */
+  margin: 0 0 25px;        /* espacio debajo del título */
+  text-shadow: 2px 2px #fff; /* brillo para destacar */
+  line-height: 1.4em;      /* más espacio entre líneas si se parte */
+  word-spacing: 6px;       /* separación entre palabras */
+  white-space: nowrap;     /* evita que se parta en dos líneas */
+}
+
+
+
+    .invitation-text p {
+      margin: 8px 0;
+      color: #444;
     }
-    h1 {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      margin-top: 20%;
-      font-size: 3em;
-      color: #d6336c;
+
+    .invitation-text .highlight {
+      color: #e91e63;
+      font-weight: bold;
     }
-    /* Cortinas */
-    .curtain {
-      position: fixed;
-      top: 0;
-      width: 50%;
-      height: 100%;
-      background: #800000;
+
+.curtain {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to right, /* 👉 rayas verticales */
+    #ff0000, #ff0000 60px,   /* rojo */
+    #ffff00 60px, #ffff00 120px, /* amarillo */
+    #00a2ff 120px, #00a2ff 180px, /* azul */
+    #00cc44 180px, #00cc44 240px  /* verde */
+  );
+  z-index: 2;
+  transition: transform 2s ease;
+  box-shadow: inset 0 -40px 60px rgba(0,0,0,0.4),
+              0 0 25px rgba(255,255,255,0.8);
+  border-radius: 0 0 40px 40px;
+  animation: waveBackground 6s ease-in-out infinite; /* animación segura */
+}
+/* Abejita --->*/
+.abejita {
+  position: fixed;
+  top: 40px;
+  left: -80px;
+  width: 60px;
+  z-index: 5;
+  animation: flyRandom 25s linear infinite;
+}
+
+/* Vuelo más random */
+@keyframes flyRandom {
+  0%   { left: -80px; top: 40px; transform: scaleX(1); }
+  10%  { left: 10%;   top: 60px; transform: scaleX(1) rotate(5deg); }
+  20%  { left: 25%;   top: 20px; transform: scaleX(1) rotate(-5deg); }
+  30%  { left: 40%;   top: 70px; transform: scaleX(1); }
+  40%  { left: 55%;   top: 30px; transform: scaleX(1) rotate(10deg); }
+  50%  { left: 70%;   top: 80px; transform: scaleX(1); }
+  51%  { left: 70%;   top: 80px; transform: scaleX(-1); } /* se voltea */
+  60%  { left: 55%;   top: 50px; transform: scaleX(-1) rotate(-10deg); }
+  70%  { left: 40%;   top: 90px; transform: scaleX(-1); }
+  80%  { left: 25%;   top: 40px; transform: scaleX(-1) rotate(5deg); }
+  90%  { left: 10%;   top: 70px; transform: scaleX(-1); }
+  100% { left: -80px; top: 40px; transform: scaleX(-1); }
+}
+
+
+
+/* <----Abejita */
+
+
+/* Estrellas */
+.star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255,255,255,0.9);
+  animation: twinkle 3s infinite;
+}
+
+/* Estrellas más grandes */
+.star-big {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 18px rgba(255,255,255,1);
+  animation: twinkle 2.5s infinite;
+}
+
+/* Estrellas de color */
+.star-colored {
+  background: #ffeb3b; /* amarillo suave */
+  box-shadow: 0 0 15px rgba(255,255,100,0.9);
+  animation: twinkle 4s infinite;
+}
+
+/* Animación de parpadeo */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1.3); }
+}
+
+/* Estrellas */
+
+/* Notas musicales */ 
+.note {
+  position: absolute;
+  bottom: -60px;               /* empiezan abajo */
+  font-size: 28px;             /* tamaño base */
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9); /* brillo */
+  animation: floatNote 8s linear infinite;
+  opacity: 0.9;
+}
+
+/* Variantes más grandes */
+.note-big {
+  font-size: 40px;
+  color: #ffeb3b; /* amarillo brillante */
+  text-shadow: 0 0 12px rgba(255,255,100,1);
+  animation-duration: 10s; /* más lento */
+}
+
+/* Variantes de color */
+.note-colored {
+  color: #ff4081; /* rosa alegre */
+  text-shadow: 0 0 12px rgba(255,64,129,1);
+  animation-duration: 9s;
+}
+
+/* Animación de subida */
+@keyframes floatNote {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translateY(-250px) rotate(15deg); }
+  100% { transform: translateY(-500px) rotate(-15deg); opacity: 0; }
+}
+
+/* Símbolos musicales variados */
+.note::before {
+  content: "♪"; /* símbolo musical */
+}
+
+.note:nth-child(2)::before { content: "♫"; }
+.note:nth-child(3)::before { content: "♩"; }
+.note:nth-child(4)::before { content: "♪"; }
+.note:nth-child(5)::before { content: "♫"; }
+
+
+/* Notas musicales*/
+
+
+/*Fuegos artificiales */
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  animation: explode 2.5s ease-out infinite;
+}
+
+/* Animación de explosión */
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255,255,255,1);
+  }
+  50% {
+    transform: scale(3);
+    opacity: 0.8;
+    box-shadow: 
+      0 0 15px #ff4081,
+      0 0 25px #ffeb3b,
+      0 0 35px #00a2ff,
+      0 0 45px #4caf50;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+    box-shadow: none;
+  }
+}
+
+/*Fuegos artificiales */
+
+/* Cortina izquierda */
+.left {
+  left: 0;
+  transform: translateX(0);
+  border-right: 10px solid #fff;
+}
+
+/* Cortina derecha */
+.right {
+  right: 0;
+  transform: translateX(0);
+  border-left: 10px solid #fff;
+}
+
+/* Apertura */
+.open.left { transform: translateX(-100%); }
+.open.right { transform: translateX(100%); }
+
+
+
+/* Animación: mueve el fondo para simular tela */
+@keyframes waveBackground {
+  0% { background-position: 0 0; }
+  50% { background-position: 40px 0; }
+  100% { background-position: 0 0; }
+}
+
+
+/* Cuando se abren */
+.open.left { transform: translateX(-100%); }
+.open.right { transform: translateX(100%); }
+
+#openCurtainBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 50px;
+  font-size: 2em;
+  font-family: 'Comic Sans MS', cursive;
+  color: #fff;
+  background: linear-gradient(45deg, #ff0000, #ffeb3b, #00a2ff, #00cc44);
+  background-size: 300% 300%;
+  border: 5px solid #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  text-shadow: 2px 2px #000;
+  animation: pulse 2s infinite, rainbow 6s linear infinite;
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Animación de fondo arcoíris */
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+#openCurtainBtn:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.6);
+}
+
+
+
+.left {
+  left: 0;
+  transform: translateX(0);
+  border-right: 8px solid #880e4f;
+}
+
+.right {
+  right: 0;
+  transform: translateX(0);
+  border-left: 8px solid #880e4f;
+}
+
+.open.left { transform: translateX(-100%); }
+.open.right { transform: translateX(100%); }
+
+.plinplin-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, #ff0000, #ffff00, #00a2ff, #00cc44);
+  padding: 8px 12px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  width: fit-content;
+  margin: 10px auto;
+}
+
+.plinplin-player button {
+  font-size: 1.2em;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.plinplin-player button:hover {
+  transform: scale(1.1);
+  background: #ffeb3b;
+}
+
+.progress {
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  height: 10px;
+  width: 120px;
+  overflow: hidden;
+}
+
+#progressBar {
+  background: #ff4081;
+  height: 100%;
+  width: 0%;
+  transition: width 0.2s;
+}
+
+.countdown {
+  font-family: 'Comic Sans MS', cursive; /* tipografía infantil */
+  font-size: 1.3em;
+  color: #444; /* gris oscuro, más suave que negro */
+  background: rgba(255, 255, 255, 0.9); /* fondo claro y discreto */
+  padding: 8px 14px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 15px auto;
+  width: fit-content;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2); /* sombra ligera */
+  border: 2px dashed #ff4081; /* borde divertido estilo infantil */
+}
+
+
+
+
+
+.plinplin {
+  position: absolute;
+  top: 40px; /* vuelve a estar más arriba */
+  left: 50%;               /* centrado horizontal */
+  transform: translateX(-50%);
+  width: 180px;            /* tamaño del personaje */
+  z-index: 2;              /* delante de globos y confeti */
+  animation: bounce 3s ease-in-out infinite;
+}
+@media (max-width: 480px) { .plinplin { width: 100px; /* más pequeño */ top: -60px; /* más cerca del texto */ } }
+.plinplin-amigos {
+  display: block;
+  margin: 20px auto 0;   /* centrada y separada del texto */
+  width: 80%;            /* ocupa la mayor parte del rectángulo */
+  max-width: 400px;      /* límite para que no se vea demasiado grande */
+  border-radius: 12px;   /* esquinas suaves */
+}
+
+.nota-final { font-family: 'Comic Sans MS', cursive; font-size: 1.1em; color: #333; /* tono suave, no tan llamativo */ background: rgba(255, 255, 255, 0.85); padding: 6px 12px; border-radius: 10px; margin-top: 20px; text-align: center; border: 2px dashed #00a2ff; /* borde divertido estilo infantil */ box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+
+/* Animación de rebote */
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-30px); }
+}
+
+
+    /* Globos estilo emoji 🎈 */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 70px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 25%), red;
+      border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+      box-shadow: inset -5px -10px 15px rgba(0,0,0,0.2);
+      animation: floatUp 10s linear infinite, swaySide 4s ease-in-out infinite;
+      opacity: 0; /* aparecen al abrir cortina */
       z-index: 1;
-      transition: transform 2s ease;
     }
-    .left {
-      left: 0;
-      transform: translateX(0);
+
+    .balloon::before {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 8px;
+      background: inherit;
+      border-radius: 50%;
     }
-    .right {
-      right: 0;
-      transform: translateX(0);
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      width: 2px;
+      height: 50px;
+      background: #555;
+      transform: translateX(-50%);
+      animation: stringWave 2s ease-in-out infinite;
     }
-    /* Estado abierto */
-    .open.left {
-      transform: translateX(-100%);
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-800px); opacity: 0; }
     }
-    .open.right {
-      transform: translateX(100%);
+
+    @keyframes swaySide {
+      0% { margin-left: 0; }
+      50% { margin-left: 15px; }
+      100% { margin-left: 0; }
+    }
+
+    @keyframes stringWave {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      50% { transform: translateX(-50%) rotate(5deg); }
+      100% { transform: translateX(-50%) rotate(0deg); }
+    }
+
+    .balloon:nth-child(3) { left: 18%; background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 25%), #ff5252; animation-delay: 0s; }
+    .balloon:nth-child(4) { left: 38%; background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 25%), #ffeb3b; animation-delay: 1.2s; }
+    .balloon:nth-child(5) { left: 58%; background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 25%), #4caf50; animation-delay: 2.4s; }
+    .balloon:nth-child(6) { left: 78%; background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 25%), #2196f3; animation-delay: 3.6s; }
+
+    /* Confeti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      top: -20px;
+      animation: fall 4s linear infinite;
+      opacity: 0; /* aparece al abrir cortina */
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
+  <img src="abejita.png" class="abejita">
+<div class="star" style="top: 40px; left: 15%;"></div>
+<div class="star" style="top: 120px; left: 30%;"></div>
+<div class="star star-big" style="top: 200px; left: 50%;"></div>
+<div class="star" style="top: 80px; left: 70%;"></div>
+<div class="star star-colored" style="top: 160px; left: 85%;"></div>
+<div class="star star-big" style="top: 220px; left: 10%;"></div>
+<div class="star" style="top: 300px; left: 40%;"></div>
+<div class="star star-colored" style="top: 350px; left: 65%;"></div>
+
+
+<div class="note" style="left: 10%;"></div>
+<div class="note note-colored" style="left: 20%;"></div>
+<div class="note note-big" style="left: 30%;"></div>
+<div class="note" style="left: 40%;"></div>
+<div class="note note-colored" style="left: 50%;"></div>
+<div class="note note-big" style="left: 60%;"></div>
+<div class="note" style="left: 70%;"></div>
+<div class="note note-colored" style="left: 80%;"></div>
+<div class="note note-big" style="left: 90%;"></div>
+
+
+
+<div class="firework" style="top: 120px; left: 30%;"></div>
+<div class="firework" style="top: 200px; left: 60%;"></div>
+<div class="firework" style="top: 300px; left: 45%;"></div>
+
+
+
+
+  <!-- Cortinas -->
   <div class="curtain left"></div>
   <div class="curtain right"></div>
-  <h1>¡Estás invitado al cumpleaños de Valeria! 🎂🎈</h1>
+    <button id="openCurtainBtn">🎉 Abrir invitación</button>
+
+  <!-- Personaje Plin Plin -->
+<img src="plinplin.png" alt="Payaso Plin Plin" class="plinplin">
+
+
+  <!-- Texto de invitación -->
+  <div class="invitation-text">
+    <h1>¡Fiesta de Cumpleaños de Mariela! 🎂🎈</h1>
+    <div class="countdown" id="countdown"></div>
+    <p>Con mucho cariño y aprecio, te invito cordialmente a mi fiesta de cumpleaños.</p>
+    <p>Será un día lleno de <span class="highlight">alegría, juegos y sorpresas</span> que quiero compartir contigo.</p>
+    <p>📅 <span class="highlight">Sábado 28 de Marzo</span></p>
+    <p>🕒 <span class="highlight">4:30 PM</span></p>
+    <p>📍 <span class="highlight">Domicilio conocido</span></p>
+    <p>¡Tu presencia hará que este día sea inolvidable! 🎉</p>
+    <!-- Imagen de Plin Plin y sus amigos -->
+    <img src="plinplin2.png" alt="Plin Plin y sus amigos" class="plinplin-amigos">
+    <!-- Reproductor de música -->
+<div class="plinplin-player">
+  <button id="playBtn">▶️</button>
+  <button id="pauseBtn">⏸️</button>
+  <div class="progress">
+    <div id="progressBar"></div>
+  </div>
+  <audio id="plinplin-song">
+    <source src="abejita.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<p class="nota-final">👕 Traer ropa para alberca solo niños 👕</p>
+
+
+</div>
+
+  </div>
+
+  <!-- Globos -->
+  <div class="balloon"></div>
+  <div class="balloon"></div>
+  <div class="balloon"></div>
+  <div class="balloon"></div>
+
+  <!-- Confeti (16 piezas para buen volumen) -->
+  <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+  <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+  <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
+  <div class="confetti"></div><div class="confetti"></div><div class="confetti"></div><div class="confetti"></div>
 
   <script>
-    // Abrir cortinas después de 1 segundo
-    setTimeout(() => {
-      document.querySelector('.left').classList.add('open');
-      document.querySelector('.right').classList.add('open');
-    }, 1000);
+    document.getElementById("openCurtainBtn").addEventListener("click", () => {
+  // Ocultar botón
+  document.getElementById("openCurtainBtn").style.display = "none";
+
+  // Abrir cortinas
+  document.querySelector('.left').classList.add('open');
+  document.querySelector('.right').classList.add('open');
+
+  // Mostrar globos
+  document.querySelectorAll('.balloon').forEach(b => b.style.opacity = 1);
+
+  // Activar confeti
+  document.querySelectorAll('.confetti').forEach((c, i) => {
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.backgroundColor = ["#ff5252","#ffeb3b","#4caf50","#2196f3","#9c27b0"][i % 5];
+    c.style.opacity = 1;
+    c.style.animationDelay = (Math.random() * 2) + "s";
+  });
+
+  // Mostrar Plin Plin
+  document.querySelector('.plinplin').style.opacity = 1;
+
+  // 🎶 Reproducir canción
+const song = document.getElementById('plinplin-song');
+const playBtn = document.getElementById('playBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const progressBar = document.getElementById('progressBar');
+
+playBtn.addEventListener('click', () => song.play());
+pauseBtn.addEventListener('click', () => song.pause());
+
+song.addEventListener('timeupdate', () => {
+  const progress = (song.currentTime / song.duration) * 100;
+  progressBar.style.width = progress + "%";
+});
+
+  song.play();
+}, { once: true });
+
+//Counter
+function startCountdown() {
+  // 📅 Fecha del cumpleaños: sábado 28 de marzo a las 4:30 PM
+  const birthday = new Date("Mar 28, 2026 16:30:00").getTime();
+
+  const countdownElement = document.getElementById("countdown");
+
+  const interval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = birthday - now;
+
+    if (distance < 0) {
+      clearInterval(interval);
+      countdownElement.innerHTML = "🎉 ¡Ya es el cumpleaños de Mariela! 🎂";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownElement.innerHTML = `🎈 Falta ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
+}
+
+startCountdown();
+
+
+
   </script>
 </body>
 </html>
